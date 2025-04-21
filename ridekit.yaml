@@ -68,13 +68,15 @@ number:
     restore_value: true
     optimistic: true
     on_value:
-      then:
-        - servo.write:
-            id: flywheel_resistance_servo
-            level: !lambda 'return x;'
+      - lambda: |-
+          id(flywheel_resistance_pwm_raw).write(x);
+        # - output.pwm.set_level:
+        #     id: flywheel_resistance_pwm_raw
+        #     level: !lambda 'return x;'
 
 sensor:
   - platform: template
     name: "Flywheel Servo Raw Value"
+    id: flywheel_resistance_pwm_raw
     lambda: 'return id(flywheel_resistance_slider).state;'
     update_interval: 1s
