@@ -44,7 +44,7 @@ substitutions:
   flywheel_resistance_rotary_encoder_b_pin: GPIO19
   # flywheel_resistance_up_button_pin: GPIO12
   # flywheel_resistance_down_button_pin: GPIO13
-  # Outputs  
+  # Outputs
   flywheel_resistance_pwm_controller_i2c_sda: GPIO21
   flywheel_resistance_pwm_controller_i2c_scl: GPIO16
   flywheel_resistance_servo_i2c_channel: "0"
@@ -52,10 +52,12 @@ substitutions:
 
 # Modular includes — create these files as your project grows
 packages:
+  pwm: !include ridekit/control/pwm_controller.yaml
+  flywheel: !include ridekit/control/flywheel_resistance_servo.yaml
+  encoder: !include ridekit/inputs/flywheel_resistance_rotary_encoder.yaml
   sensors: !include ridekit/sensors/cadence.yaml
   inputs: !include ridekit/inputs/buttons.yaml
   display: !include ridekit/display/screen.yaml
-  # Add more includes here as you build features
 
 number:
   - platform: template
@@ -69,13 +71,11 @@ number:
     optimistic: true
     on_value:
       then:
-      - output.pwm.set_level:
-          id: flywheel_resistance_pwm_raw
-          level: !lambda 'return x;'
+        - lambda: |-
+            id(flywheel_resistance_servo).write(x);
 
 sensor:
   - platform: template
     name: "Flywheel Servo Raw Value"
-    id: flywheel_resistance_pwm_raw
     lambda: 'return id(flywheel_resistance_slider).state;'
     update_interval: 1s
