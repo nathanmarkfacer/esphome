@@ -1,18 +1,11 @@
-binary_sensor:
-  - platform: gpio
-    pin: ${encoder_button_pin}
-    name: "Encoder Button"
-    id: encoder_button
-    on_press:
-      then:
-        - logger.log: "Encoder button pressed"
-
+# This configuration file is for a rotary encoder that adjusts the flywheel resistance on a ride kit.
+# It uses a PCA9685 PWM controller to control the servo that adjusts the resistance.
 sensor:
   - platform: rotary_encoder
     name: "Flywheel Resistance Adjuster"
     id: resistance_encoder
-    pin_a: ${encoder_a_pin}
-    pin_b: ${encoder_b_pin}
+    pin_a: ${flywheel_resistance_rotary_encoder_a_pin}
+    pin_b: ${flywheel_resistance_rotary_encoder_b_pin}
     min_value: 0
     max_value: 50  # You can adjust this range based on servo resolution
     resolution: 1

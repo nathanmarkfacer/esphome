@@ -1,6 +1,6 @@
 i2c:
-  sda: GPIO21
-  scl: GPIO22
+  sda: ${flywheel_resistance_pwm_controller_i2c_sda}
+  scl: ${flywheel_resistance_pwm_controller_i2c_scl}
   scan: true
 
 pca9685:

@@ -1,3 +1,13 @@
+# RideKit Hardware Setup
+# Board: esp32-s3-devkitc-1
+# Connections:
+#   Input Controls
+#   - Flywheel Resistance Rotary Encoder: GPIO18 (A), GPIO19 (B)
+#   Input Sensors
+#   - Pedal Cadence Sensor: TBD (A), TBD (B)
+#   Outputs
+#   - Flywheel Resistance PWM Controller i2c: GPIO21 (SDA), GPIO16 (SCL), flywheel_resistance_servo_i2c_channel: 0
+
 esphome:
   name: ridekit
   friendly_name: RideKit Exercise Bike
@@ -26,13 +36,14 @@ esp32_ble_tracker:
 
 # Substitutions for pin management and easy reuse
 substitutions:
-  resistance_servo_pin: GPIO18
-  cadence_sensor_pin: GPIO14
-  up_button_pin: GPIO12
-  down_button_pin: GPIO13
-  encoder_a_pin: GPIO25
-  encoder_b_pin: GPIO26
-  encoder_button_pin: GPIO27
+# Input Controls
+  flywheel_resistance_rotary_encoder_a_pin: GPIO18
+  flywheel_resistance_rotary_encoder_b_pin: GPIO19
+# Outputs  
+  flywheel_resistance_pwm_controller_i2c_sda: GPIO21
+  flywheel_resistance_pwm_controller_i2c_scl: GPIO16
+  flywheel_resistance_servo_i2c_channel: "0"
+  # pedal_cadence_sensor_pin: TBD
 
 # Modular includes — create these files as your project grows
 packages:
@@ -42,6 +53,6 @@ packages:
   sensors: !include ridekit/sensors/cadence.yaml
   inputs: !include ridekit/inputs/buttons.yaml
   display: !include ridekit/display/screen.yaml
-  
+
 
 
