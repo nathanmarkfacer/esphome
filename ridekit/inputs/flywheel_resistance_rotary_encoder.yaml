@@ -1,0 +1,26 @@
+binary_sensor:
+  - platform: gpio
+    pin: ${encoder_button_pin}
+    name: "Encoder Button"
+    id: encoder_button
+    on_press:
+      then:
+        - logger.log: "Encoder button pressed"
+
+sensor:
+  - platform: rotary_encoder
+    name: "Flywheel Resistance Adjuster"
+    id: resistance_encoder
+    pin_a: ${encoder_a_pin}
+    pin_b: ${encoder_b_pin}
+    min_value: 0
+    max_value: 50  # You can adjust this range based on servo resolution
+    resolution: 1
+    on_value:
+      then:
+        - logger.log:
+            format: "Encoder value changed: %d"
+            args: [ 'id(resistance_encoder).state' ]
+        - servo.write:
+            id: flywheel_resistance_servo
+            level: !lambda 'return id(resistance_encoder).state / 50.0;'

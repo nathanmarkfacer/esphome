@@ -1,89 +1,46 @@
 esphome:
-  name: "ridekit"
-  friendly_name: "RideKit"
+  name: ridekit
+  friendly_name: RideKit Exercise Bike
 
 esp32:
   board: esp32-s3-devkitc-1
   framework:
     type: esp-idf
 
+# Enable logging
 logger:
   level: INFO
-
 
 # Allow Over-The-Air updates
 ota:
   platform: esphome
 
 wifi:
-  ssid: "NETGEAR33-2G"
-  password: "exoticviolin805"
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
 
-i2c:
-  sda: GPIO21
-  scl: GPIO16
-  scan: true
+captive_portal:
 
-pca9685:
-  id: pwm_controller
-  frequency: 50Hz
+# Enable BLE for future HR monitor support (optional for now)
+esp32_ble_tracker:
 
-output:
-  - platform: pca9685
-    pca9685_id: pwm_controller
-    channel: 0
-    id: raw_servo_output
+# Substitutions for pin management and easy reuse
+substitutions:
+  resistance_servo_pin: GPIO18
+  cadence_sensor_pin: GPIO14
+  up_button_pin: GPIO12
+  down_button_pin: GPIO13
+  encoder_a_pin: GPIO25
+  encoder_b_pin: GPIO26
+  encoder_button_pin: GPIO27
 
-  - platform: template
-    id: resistance_servo
-    type: float
-    write_action:
-        - lambda: |-
-            float min_pulse = 0.03;
-            float max_pulse = 0.12;
-            float duty = min_pulse + (max_pulse - min_pulse) * state;
-            id(raw_servo_output).set_level(duty);
+# Modular includes — create these files as your project grows
+packages:
+  pwm: !include ridekit/control/pwm_controller.yaml
+  flywheel: !include ridekit/control/flywheel_resistance_servo.yaml
+  encoder: !include ridekit/inputs/flywheel_resistance_rotary_encoder.yaml
+  sensors: !include ridekit/sensors/cadence.yaml
+  inputs: !include ridekit/inputs/buttons.yaml
+  display: !include ridekit/display/screen.yaml
 
-sensor:
-  - platform: rotary_encoder
-    name: "Bike Resistance Adjuster"
-    pin_a: GPIO18
-    pin_b: GPIO19
-    min_value: 0
-    max_value: 100
-    resolution: 1
-    id: resistance_level
-
-interval:
-  - interval: 100ms
-    then: 
-      - output.set_level:
-          id: resistance_servo
-          level: !lambda |-
-            return id(resistance_level).state / 100.0;
-
-
-# servo:
-#   - id: resistance_servo
-#     output: pwm_output_0
-#     min_level: 0.00  # widened range for full motion
-#     max_level: 0.98
-
-# number:
-
-#   - platform: template
-#     name: "Resistance Level"
-#     id: resistance_level
-#     min_value: 0.00
-#     max_value: 0.06
-#     step: 0.001
-#     optimistic: true
-# #    on_value:
-# #      - lambda: |-
-# #          id(resistance_servo).write(x);
-#     set_action:
-#       - lambda: |-
-#           // "x" is the new value from HA
-#           id(resistance_level) = x;
-#           ESP_LOGD("resistance_level", "New resistance: %.2f", x);
 

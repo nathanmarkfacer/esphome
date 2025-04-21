@@ -1,0 +1,15 @@
+i2c:
+  sda: GPIO21
+  scl: GPIO22
+  scan: true
+
+pca9685:
+  id: pwm_expander
+  address: 0x40  # default I2C address; update if needed
+  frequency: 50Hz  # Use 50Hz for servos
+
+output:
+  - platform: pca9685
+    pca9685_id: pwm_expander
+    channel: 0
+    id: flywheel_resistance_pwm_raw

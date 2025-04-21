@@ -1,0 +1,5 @@
+servo:
+  - id: flywheel_resistance_servo
+    output: flywheel_resistance_pwm_raw
+    min_level: 3%
+    max_level: 12%
