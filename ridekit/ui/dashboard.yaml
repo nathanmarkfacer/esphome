@@ -16,7 +16,7 @@ sections:
         entity: number.ridekit_flywheel_resistance_control
         name: Resistance Slider
         icon: mdi:tune-vertical
-
+ 
       - type: tile
         entity: sensor.ridekit_rotary_encoder_resistance
         name: Rotary %

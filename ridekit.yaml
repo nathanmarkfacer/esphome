@@ -52,10 +52,9 @@ substitutions:
   flywheel_resistance_pwm_controller_i2c_scl: GPIO16
   flywheel_resistance_servo_i2c_channel: "0"
   # pedal_cadence_sensor_pin: TBD
-
+ 
 # Modular includes — create these files as your project grows
 packages:
-
   pwm: !include ridekit/control/pwm_controller.yaml
   flywheel: !include ridekit/control/flywheel_resistance_servo.yaml
   encoder: !include ridekit/inputs/flywheel_resistance_rotary_encoder.yaml
