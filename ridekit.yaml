@@ -68,11 +68,10 @@ number:
     restore_value: true
     optimistic: true
     on_value:
-      - lambda: |-
-          id(flywheel_resistance_pwm_raw).write(x);
-        # - output.pwm.set_level:
-        #     id: flywheel_resistance_pwm_raw
-        #     level: !lambda 'return x;'
+      then:
+      - output.pwm.set_level:
+          id: flywheel_resistance_pwm_raw
+          level: !lambda 'return x;'
 
 sensor:
   - platform: template
