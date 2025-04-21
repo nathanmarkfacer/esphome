@@ -5,33 +5,38 @@ type: sections
 max_columns: 4
 visible:
   - user: 88c60e0d0c144f23a86449c84f6a03d2
+
 sections:
   - type: grid
     cards:
       - type: heading
         heading: Resistance Controls
+
       - type: tile
         entity: number.ridekit_flywheel_resistance_control
         name: Resistance Slider
         icon: mdi:tune-vertical
-        features_position: bottom
-        vertical: false
-        grid_options:
-          columns: 12
-          rows: 1
+
       - type: tile
         entity: sensor.ridekit_rotary_encoder_resistance
         name: Rotary %
         icon: mdi:rotate-right
+
       - type: tile
         entity: sensor.ridekit_flywheel_servo_raw_value
         name: Servo Level
         icon: mdi:chart-line
-    column_span: 4
+
+      - type: tile
+        entity: sensor.ridekit_servo_output
+        name: Servo %
+        icon: mdi:percent
+
   - type: grid
     cards:
       - type: heading
         heading: Preset Resistance Buttons
+
       - type: button
         name: Set 0%
         icon: mdi:numeric-0-box
@@ -40,7 +45,8 @@ sections:
           service: number.set_value
           data:
             entity_id: number.ridekit_flywheel_resistance_control
-            value: 0
+            value: 0.0
+
       - type: button
         name: Set 10%
         icon: mdi:numeric-1-box
@@ -50,6 +56,7 @@ sections:
           data:
             entity_id: number.ridekit_flywheel_resistance_control
             value: 0.1
+
       - type: button
         name: Set 20%
         icon: mdi:numeric-2-box
@@ -59,6 +66,7 @@ sections:
           data:
             entity_id: number.ridekit_flywheel_resistance_control
             value: 0.2
+
       - type: button
         name: Set 30%
         icon: mdi:numeric-3-box
@@ -68,6 +76,7 @@ sections:
           data:
             entity_id: number.ridekit_flywheel_resistance_control
             value: 0.3
+
       - type: button
         name: Set 40%
         icon: mdi:numeric-4-box
@@ -77,6 +86,7 @@ sections:
           data:
             entity_id: number.ridekit_flywheel_resistance_control
             value: 0.4
+
       - type: button
         name: Set 50%
         icon: mdi:numeric-5-box
@@ -86,6 +96,7 @@ sections:
           data:
             entity_id: number.ridekit_flywheel_resistance_control
             value: 0.5
+
       - type: button
         name: Set 60%
         icon: mdi:numeric-6-box
@@ -95,6 +106,7 @@ sections:
           data:
             entity_id: number.ridekit_flywheel_resistance_control
             value: 0.6
+
       - type: button
         name: Set 70%
         icon: mdi:numeric-7-box
@@ -104,6 +116,7 @@ sections:
           data:
             entity_id: number.ridekit_flywheel_resistance_control
             value: 0.7
+
       - type: button
         name: Set 80%
         icon: mdi:numeric-8-box
@@ -113,6 +126,7 @@ sections:
           data:
             entity_id: number.ridekit_flywheel_resistance_control
             value: 0.8
+
       - type: button
         name: Set 90%
         icon: mdi:numeric-9-box
@@ -122,6 +136,7 @@ sections:
           data:
             entity_id: number.ridekit_flywheel_resistance_control
             value: 0.9
+
       - type: button
         name: Set 100%
         icon: mdi:numeric-10-box
@@ -130,24 +145,26 @@ sections:
           service: number.set_value
           data:
             entity_id: number.ridekit_flywheel_resistance_control
-            value: 1
+            value: 1.0
+
   - type: grid
     cards:
       - type: heading
         heading: Resistance Feedback
+
+      - type: gauge
+        entity: sensor.ridekit_flywheel_servo_raw_value
+        name: Resistance Level
+        min: 0
+        max: 1
+        severity:
+          green: 0
+          yellow: 0.5
+          red: 0.8
+
       - type: statistics-graph
         title: Resistance Over Time
         entities:
           - sensor.ridekit_flywheel_servo_raw_value
         days_to_show: 1
         chart_type: line
-      - type: gauge
-        entity: sensor.ridekit_rotary_encoder_resistance
-        name: Resistance Level
-        min: 0
-        max: 100
-        severity:
-          green: 0
-          yellow: 50
-          red: 80
-cards: []

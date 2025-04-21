@@ -62,5 +62,7 @@ packages:
   slider: !include ridekit/inputs/flywheel_resistance_slider.yaml
   inputs: !include ridekit/inputs/buttons.yaml
   sensor: !include ridekit/sensors/flywheel_resistance_sensor_feedback.yaml
+  servo_percent: !include ridekit/sensors/servo_percent.yaml
   cadence: !include ridekit/sensors/cadence.yaml
   display: !include ridekit/display/screen.yaml
+

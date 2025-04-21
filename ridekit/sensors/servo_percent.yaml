@@ -1,0 +1,10 @@
+sensor:
+  - platform: template
+    name: "Servo Output (%)"
+    id: flywheel_servo_percent
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+    lambda: |-
+      return round(id(flywheel_resistance_slider).state * 100.0);
+    update_interval: 250ms
+    
