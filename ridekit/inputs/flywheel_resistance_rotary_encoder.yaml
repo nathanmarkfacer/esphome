@@ -17,3 +17,8 @@ sensor:
         - servo.write:
             id: flywheel_resistance_servo
             level: !lambda 'return id(resistance_encoder).state / 50.0;'
+            
+  - platform: template
+    name: "Rotary Encoder Position"
+    lambda: 'return id(resistance_encoder).state;'
+    update_interval: 1s
