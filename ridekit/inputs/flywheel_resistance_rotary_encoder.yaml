@@ -14,9 +14,10 @@ sensor:
         - logger.log:
             format: "Encoder value changed: %d"
             args: [ 'id(resistance_encoder).state' ]
-        - servo.write:
-            id: flywheel_resistance_servo
-            level: !lambda 'return id(resistance_encoder).state / 50.0;'
+        - lambda: |-
+            float level = id(resistance_encoder).state / 50.0;
+            id(flywheel_resistance_servo).write(level);
+            id(flywheel_resistance_slider).publish_state(level);
             
   - platform: template
     name: "Rotary Encoder Position"
