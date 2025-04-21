@@ -12,6 +12,6 @@ number:
     on_value:
       then:
         - lambda: |-
-            ESP_LOGD("slider", "Slider changed: %f", x);
             id(flywheel_resistance_servo).write(x);
-
+            id(resistance_encoder).set_state(round(x * 50));
+            ESP_LOGD("slider", "Slider changed: %f", x);

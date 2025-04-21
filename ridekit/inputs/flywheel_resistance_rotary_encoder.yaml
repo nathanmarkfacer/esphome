@@ -20,6 +20,9 @@ sensor:
             id(flywheel_resistance_slider).publish_state(level);
             
   - platform: template
-    name: "Rotary Encoder Position"
-    lambda: 'return id(resistance_encoder).state;'
-    update_interval: 1s
+    name: "Rotary Encoder Resistance (%)"
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+    lambda: |-
+      return round((id(resistance_encoder).state / 50.0) * 100.0);
+    update_interval: 250ms
