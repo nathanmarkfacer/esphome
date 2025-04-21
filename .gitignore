@@ -1,0 +1,21 @@
+# ----------------------------------------------------
+# 🚫 ESPHome build and temp files
+.esphome/
+*.log
+*.tmp
+*.bak
+
+# ----------------------------------------------------
+# 🔐 Secrets — never commit these
+secrets.yaml
+ridekit/secrets.yaml
+
+# ----------------------------------------------------
+# 🐍 Python cache (if using ESPHome CLI tools)
+__pycache__/
+*.pyc
+
+# ----------------------------------------------------
+# 🧠 Editor files (optional but common)
+.vscode/
+*.code-workspace
